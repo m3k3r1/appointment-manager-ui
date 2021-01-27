@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as yup from 'yup';
 import { FormHandles } from '@unform/core';
@@ -9,18 +9,25 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErrors';
 
-const SignIn: React.FC = () => {
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(async (data: FormData) => {
     try {
       formRef.current?.setErrors({});
       const schema = yup.object().shape({
+        name: yup.string().required('Name is required'),
         email: yup
           .string()
           .required('Email is required')
           .email('Type a valid email'),
-        password: yup.string().required('Password is required'),
+        password: yup.string().min(6, 'Minimum 6 characters'),
       });
 
       await schema.validate(data, {
@@ -31,12 +38,15 @@ const SignIn: React.FC = () => {
       formRef.current?.setErrors(errors);
     }
   }, []);
+
   return (
     <Container>
+      <Background />
       <Content>
         <img src={logoImg} alt="GoBarber" />
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Login</h1>
+          <h1>Register</h1>
+          <Input name="name" icon={FiUser} placeholder="Name" />
           <Input name="email" icon={FiMail} placeholder="Email" />
           <Input
             name="password"
@@ -44,16 +54,14 @@ const SignIn: React.FC = () => {
             type="password"
             placeholder="Password"
           />
-          <Button type="submit">Login</Button>
-          <a href="lkdfjg">Forgot Password</a>
+          <Button type="submit">Register</Button>
         </Form>
         <a href="lkdfjg">
-          <FiLogIn /> Create Account
+          <FiArrowLeft /> Back to Login
         </a>
       </Content>
-      <Background />
     </Container>
   );
 };
 
-export default SignIn;
+export default SignUp;

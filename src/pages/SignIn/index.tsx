@@ -3,7 +3,8 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as yup from 'yup';
 import { FormHandles } from '@unform/core';
-import { Background, Container, Content } from './styles';
+import { Link } from 'react-router-dom';
+import { AnimatedContainer, Background, Container, Content } from './styles';
 import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -57,22 +58,24 @@ const SignIn: React.FC = () => {
   return (
     <Container>
       <Content>
-        <img src={logoImg} alt="GoBarber" />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Login</h1>
-          <Input name="email" icon={FiMail} placeholder="Email" />
-          <Input
-            name="password"
-            icon={FiLock}
-            type="password"
-            placeholder="Password"
-          />
-          <Button type="submit">Login</Button>
-          <a href="lkdfjg">Forgot Password</a>
-        </Form>
-        <a href="lkdfjg">
-          <FiLogIn /> Create Account
-        </a>
+        <AnimatedContainer>
+          <img src={logoImg} alt="GoBarber" />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Login</h1>
+            <Input name="email" icon={FiMail} placeholder="Email" />
+            <Input
+              name="password"
+              icon={FiLock}
+              type="password"
+              placeholder="Password"
+            />
+            <Button type="submit">Login</Button>
+            <a href="lkdfjg">Forgot Password</a>
+          </Form>
+          <Link to="/signup">
+            <FiLogIn /> Create Account
+          </Link>
+        </AnimatedContainer>
       </Content>
       <Background />
     </Container>
